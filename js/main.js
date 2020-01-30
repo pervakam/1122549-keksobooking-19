@@ -1,13 +1,17 @@
 var mapPins = document.querySelector('.map__pins');
 var card = document.querySelector('#card').content.querySelector('article');
-var parameters = [];
-var map = document.querySelector('.map')
-map.classList.remove('map--faded')
 
-for (var i = 0; i < 8; i++) {
-  var cardElement = card.cloneNode(true);
-  mapPins.appendChild(cardElement);
-};
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
+
+// var cardElement = document.createDocumentFragment();
+// cardElement.appendChild(card);
+// mapPins.appendChild(cardElement);
+
+for (var a = 0; a < 8; a++) {
+  var cardItem = card.cloneNode(true);
+  mapPins.appendChild(cardItem);
+}
 
 
 
