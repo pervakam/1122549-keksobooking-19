@@ -1,40 +1,94 @@
-var mapPins = document.querySelector('.map__pins');
-var card = document.querySelector('#card').content.querySelector('article');
+'use strict';
 
+var annoucementTitle = ['Заголовок объявления'];
+var annoucementAdress = ['600, 350'];
+var annoucementPriceMin = 0;
+var annoucementPriceMax = 1000000;
+var annoucementType = ['palace', 'flat', 'house', 'bungalo'];
+var annoucementRooms = [1, 2, 3, 100];
+var annoucementGuests = [1, 2, 3];
+var annoucementCheckin = ['12:00', '13:00', '14:00'];
+var annoucementCheckout = ['12:00', '13:00', '14:00'];
+var annoucementFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var announcementDescription = 'Описание';
+var announcementPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var announcementLocationXMin = 0;
+var announcementLocationXMax = 1200;
+var announcementLocationYMin = 130;
+var announcementLocationYMax = 630;
+var announcement = [];
+var announcementLength = 8;
+
+var randomInteger = function (min, max) {
+  return Math.round(Math.random() * (max - min)) + min;
+};
+var randomElement = function (elements) {
+  return Math.floor(Math.random()*elements.length);
+};
+var randomArray = function (items) {
+  return items.slice(0, items.length);
+};
+
+var annoucementItem = function () {
+  for (var j = 0; j < announcementLength; j++) {
+    var randomPositionX = randomInteger(announcementLocationXMin, announcementLocationXMax);
+    var randomPositionY = randomInteger(announcementLocationYMin, announcementLocationYMax);
+
+    announcement.push(
+      {
+        author: {
+          avatar: 'img/avatars/user0' + (j + 1) + '.png'
+        },
+        offer: {
+          title: randomElement(annoucementTitle),
+          address: randomPositionX + ',' + randomPositionY,
+          price: randomInteger(annoucementPriceMin, annoucementPriceMax),
+          type: randomElement(annoucementType),
+          rooms: randomElement(annoucementRooms),
+          guests: randomElement(annoucementGuests),
+          checkin: randomElement(annoucementCheckin),
+          checkout: randomElement(annoucementCheckout),
+          features: randomArray(annoucementFeatures),
+          description: randomElement(announcementDescription),
+          photos: randomArray(announcementPhotos)
+        },
+        location: {
+          x: randomPositionX,
+          y: randomPositionY
+        }
+      });
+  }
+};
+
+annoucementItem(announcementLength);
+console.log(announcement);
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-// var cardElement = document.createDocumentFragment();
-// cardElement.appendChild(card);
-// mapPins.appendChild(cardElement);
+var mapPin = document.querySelector('#pin').content.querySelector('button');
+var pinWidth = 50;
+var pinHeight = 70;
+var mapPins = document.querySelector('.map__pins');
 
-for (var a = 0; a < 8; a++) {
-  var cardItem = card.cloneNode(true);
-  mapPins.appendChild(cardItem);
-}
+var createPin = function (ad) {
+  var pinElement = mapPin.cloneNode(true);
+  var pinPosition = 'left: ' + (ad.location.x - (pinWidth / 2)) + 'px; top: ' + (ad.location.y - pinHeight) + 'px;';
 
+  map.appendChild(pinElement);
+  pinElement.style = pinPosition;
+  pinElement.querySelector('img').src = ad.author.avatar;
+  pinElement.querySelector('img').alt = ad.offer.title;
 
+  return pinElement;
+};
 
-// {
-//   "author": {
-//   "avatar": строка, адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются
-// },
-//   "offer": {
-//   "title": строка, заголовок предложения
-//   "address": строка, адрес предложения. Для простоты пусть пока представляет собой запись вида "{{location.x}}, {{location.y}}", например, "600, 350"
-//   "price": число, стоимость
-//   "type": строка с одним из четырёх фиксированных значений: palace, flat, house или bungalo
-//   "rooms": число, количество комнат
-//   "guests": число, количество гостей, которое можно разместить
-//   "checkin": строка с одним из трёх фиксированных значений: 12:00, 13:00 или 14:00,
-//     "checkout": строка с одним из трёх фиксированных значений: 12:00, 13:00 или 14:00
-//   "features": массив строк случайной длины из ниже предложенных: "wifi", "dishwasher", "parking", "washer", "elevator", "conditioner",
-//     "description": строка с описанием,
-//     "photos": массив строк случайной длины, содержащий адреса фотографий "http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"
-// },
-//
-//   "location": {
-//   "x": случайное число, координата x метки на карте. Значение ограничено размерами блока, в котором перетаскивается метка.
-//   "y": случайное число, координата y метки на карте от 130 до 630.
-// }
-// }
+var generatePin = function () {
+  var item = document.createDocumentFragment();
+  for (var i = 0; i < announcementLength; i++) {
+    item.appendChild(createPin(announcement[i]));
+  }
+
+  mapPins.appendChild(item);
+};
+
+generatePin();
