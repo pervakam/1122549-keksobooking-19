@@ -1,7 +1,6 @@
 'use strict';
 
 var annoucementTitle = ['Заголовок объявления'];
-var annoucementAdress = ['600, 350'];
 var annoucementPriceMin = 0;
 var annoucementPriceMax = 1000000;
 var annoucementType = ['palace', 'flat', 'house', 'bungalo'];
@@ -16,52 +15,52 @@ var announcementLocationXMin = 0;
 var announcementLocationXMax = 1200;
 var announcementLocationYMin = 130;
 var announcementLocationYMax = 630;
-var announcement = [];
+var announcements = [];
 var announcementLength = 8;
 
-var randomInteger = function (min, max) {
+var getRandomInteger = function (min, max) {
   return Math.round(Math.random() * (max - min)) + min;
 };
-var randomElement = function (elements) {
-  return Math.floor(Math.random()*elements.length);
+var getRandomElement = function (elements) {
+  return Math.floor(Math.random() * elements.length);
 };
-var randomArray = function (items) {
+var getRandomArray = function (items) {
   return items.slice(0, items.length);
 };
 
-var annoucementItem = function () {
+var createAnnoucementItem = function () {
   for (var j = 0; j < announcementLength; j++) {
-    var randomPositionX = randomInteger(announcementLocationXMin, announcementLocationXMax);
-    var randomPositionY = randomInteger(announcementLocationYMin, announcementLocationYMax);
+    var randomPositionX = getRandomInteger(announcementLocationXMin, announcementLocationXMax);
+    var randomPositionY = getRandomInteger(announcementLocationYMin, announcementLocationYMax);
 
-    announcement.push(
-      {
-        author: {
-          avatar: 'img/avatars/user0' + (j + 1) + '.png'
-        },
-        offer: {
-          title: randomElement(annoucementTitle),
-          address: randomPositionX + ',' + randomPositionY,
-          price: randomInteger(annoucementPriceMin, annoucementPriceMax),
-          type: randomElement(annoucementType),
-          rooms: randomElement(annoucementRooms),
-          guests: randomElement(annoucementGuests),
-          checkin: randomElement(annoucementCheckin),
-          checkout: randomElement(annoucementCheckout),
-          features: randomArray(annoucementFeatures),
-          description: randomElement(announcementDescription),
-          photos: randomArray(announcementPhotos)
-        },
-        location: {
-          x: randomPositionX,
-          y: randomPositionY
-        }
-      });
+    announcements.push(
+        {
+          author: {
+            avatar: 'img/avatars/user0' + (j + 1) + '.png'
+          },
+          offer: {
+            title: getRandomElement(annoucementTitle),
+            address: randomPositionX + ',' + randomPositionY,
+            price: getRandomInteger(annoucementPriceMin, annoucementPriceMax),
+            type: getRandomElement(annoucementType),
+            rooms: getRandomElement(annoucementRooms),
+            guests: getRandomElement(annoucementGuests),
+            checkin: getRandomElement(annoucementCheckin),
+            checkout: getRandomElement(annoucementCheckout),
+            features: getRandomArray(annoucementFeatures),
+            description: getRandomElement(announcementDescription),
+            photos: getRandomArray(announcementPhotos)
+          },
+          location: {
+            x: randomPositionX,
+            y: randomPositionY
+          }
+        });
   }
 };
 
-annoucementItem(announcementLength);
-console.log(announcement);
+createAnnoucementItem(announcementLength);
+
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
@@ -85,7 +84,7 @@ var createPin = function (ad) {
 var generatePin = function () {
   var item = document.createDocumentFragment();
   for (var i = 0; i < announcementLength; i++) {
-    item.appendChild(createPin(announcement[i]));
+    item.appendChild(createPin(announcements[i]));
   }
 
   mapPins.appendChild(item);
