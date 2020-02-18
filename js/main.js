@@ -5,7 +5,7 @@ var annoucementPriceMin = 0;
 var annoucementPriceMax = 1000000;
 var annoucementType = ['palace', 'flat', 'house', 'bungalo'];
 var annoucementRooms = [1, 2, 3, 100];
-var annoucementGuests = [1, 2, 3];
+var annoucementGuests = [1, 2, 3, 0];
 var annoucementCheckin = ['12:00', '13:00', '14:00'];
 var annoucementCheckout = ['12:00', '13:00', '14:00'];
 var annoucementFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -122,6 +122,7 @@ var notice = document.querySelector('.notice');
 var noticeFieldset = notice.querySelectorAll('fieldset');
 var inputAdres = document.getElementById('address');
 
+
 for (var i = 0; i < noticeFieldset.length; i++) {
   noticeFieldset[i].setAttribute('disabled', 'disabled');
 }
@@ -178,5 +179,47 @@ var activateMap = function (evt) {
 mapPinMain.addEventListener('keydown', activateMap);
 mapPinMain.addEventListener('mousedown', activateMap);
 
+var roomNumber = document.getElementById('room_number');
+var capacity = document.getElementById('capacity');
 
+var selectRoomNumber = roomNumber.getElementsByTagName('option');
+var selectCapacity = capacity.getElementsByTagName('option');
+
+roomNumber.addEventListener('change', function() {
+  if(roomNumber.value = '1') {
+    selectCapacity[0].classList.add('hidden');
+  };
+}, true)
+
+
+
+// // var findRoomNumber = function (evt) {
+// //   if (selectRoomNumber.value = '1') {
+// //     selectCapacity[0].removeAttribute('selected');
+// //     selectCapacity[2].setAttribute('selected', 'selected');
+// //     // selectCapacity[0].classList.add('hidden');
+// //   }
+// // };
+//
+//
+// if (selectRoomNumber.value = '1') {
+//   selectCapacity[0].removeAttribute('selected');
+//   selectCapacity[2].setAttribute('selected', 'selected');
+//   selectCapacity[0].setAttribute('disabled', 'disabled');
+//   selectCapacity[1].setAttribute('disabled', 'disabled');
+//   selectCapacity[3].setAttribute('disabled', 'disabled');
+// }
+//
+// roomNumber.addEventListener('change', function (evt) {
+//   if (selectRoomNumber.value = '2') {
+//     evt.preventDefault();
+//     selectCapacity[0].removeAttribute('selected');
+//     // selectCapacity[1].setAttribute('selected', 'selected');
+//     // selectCapacity[0].setAttribute('disabled', 'disabled');
+//     // selectCapacity[3].setAttribute('disabled', 'disabled');
+//   } else {
+//     evt.preventDefault();
+//   }
+// }
+// )
 
