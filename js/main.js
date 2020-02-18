@@ -182,44 +182,41 @@ mapPinMain.addEventListener('mousedown', activateMap);
 var roomNumber = document.getElementById('room_number');
 var capacity = document.getElementById('capacity');
 
+
 var selectRoomNumber = roomNumber.getElementsByTagName('option');
 var selectCapacity = capacity.getElementsByTagName('option');
 
-roomNumber.addEventListener('change', function() {
-  if(roomNumber.value = '1') {
-    selectCapacity[0].classList.add('hidden');
-  };
-}, true)
-
-
-
-// // var findRoomNumber = function (evt) {
-// //   if (selectRoomNumber.value = '1') {
-// //     selectCapacity[0].removeAttribute('selected');
-// //     selectCapacity[2].setAttribute('selected', 'selected');
-// //     // selectCapacity[0].classList.add('hidden');
-// //   }
-// // };
+// capacity.addEventListener("change", function () {
+//   console.log(capacity.value);
+// });
 //
-//
-// if (selectRoomNumber.value = '1') {
-//   selectCapacity[0].removeAttribute('selected');
-//   selectCapacity[2].setAttribute('selected', 'selected');
-//   selectCapacity[0].setAttribute('disabled', 'disabled');
-//   selectCapacity[1].setAttribute('disabled', 'disabled');
-//   selectCapacity[3].setAttribute('disabled', 'disabled');
-// }
-//
-// roomNumber.addEventListener('change', function (evt) {
-//   if (selectRoomNumber.value = '2') {
-//     evt.preventDefault();
-//     selectCapacity[0].removeAttribute('selected');
-//     // selectCapacity[1].setAttribute('selected', 'selected');
-//     // selectCapacity[0].setAttribute('disabled', 'disabled');
-//     // selectCapacity[3].setAttribute('disabled', 'disabled');
-//   } else {
-//     evt.preventDefault();
-//   }
-// }
-// )
+// roomNumber.addEventListener("change", function () {
+//   console.log(roomNumber.value);
+// });
 
+selectCapacity[0].classList.add('hidden');
+selectCapacity[1].classList.add('hidden');
+selectCapacity[3].classList.add('hidden');
+
+
+roomNumber.addEventListener("change", function (a) {
+  if (roomNumber.value === '2') {
+    selectCapacity[1].classList.remove('hidden');
+  } else if (roomNumber.value === '3') {
+    selectCapacity[0].classList.remove('hidden');
+    selectCapacity[1].classList.remove('hidden');
+  } else if (roomNumber.value === '100') {
+    selectCapacity[3].classList.remove('hidden');
+    selectCapacity[2].classList.add('hidden');
+  } else {
+    a.preventDefault()
+  }
+
+});
+
+
+// 1 комната — «для 1 гостя»;
+// 2 комнаты — «для 2 гостей» или «для 1 гостя»;
+// 3 комнаты — «для 3 гостей», «для 2 гостей» или «для 1 гостя»;
+// 100 комнат — «не для гостей».
+//
