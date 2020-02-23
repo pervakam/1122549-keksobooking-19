@@ -39,29 +39,28 @@ var createAnnoucementItem = function () {
     var randomPositionY = getRandomInteger(announcementLocationYMin, announcementLocationYMax);
 
     announcements.push(
-      {
-        author: {
-          avatar: 'img/avatars/user0' + (j + 1) + '.png'
-        },
-        offer: {
-          title: getRandomElement(annoucementTitle),
-          address: randomPositionX + ',' + randomPositionY,
-          price: getRandomInteger(annoucementPriceMin, annoucementPriceMax),
-          type: getRandomElement(annoucementType),
-          rooms: getRandomElement(annoucementRooms),
-          guests: getRandomElement(annoucementGuests),
-          checkin: getRandomElement(annoucementCheckin),
-          checkout: getRandomElement(annoucementCheckout),
-          features: getRandomArray(annoucementFeatures),
-          description: getRandomElement(announcementDescription),
-          photos: getRandomElement(announcementPhotos)
-        },
-        location: {
-          x: randomPositionX,
-          y: randomPositionY
-        }
-      });
-
+        {
+          author: {
+            avatar: 'img/avatars/user0' + (j + 1) + '.png'
+          },
+          offer: {
+            title: getRandomElement(annoucementTitle),
+            address: randomPositionX + ',' + randomPositionY,
+            price: getRandomInteger(annoucementPriceMin, annoucementPriceMax),
+            type: getRandomElement(annoucementType),
+            rooms: getRandomElement(annoucementRooms),
+            guests: getRandomElement(annoucementGuests),
+            checkin: getRandomElement(annoucementCheckin),
+            checkout: getRandomElement(annoucementCheckout),
+            features: getRandomArray(annoucementFeatures),
+            description: getRandomElement(announcementDescription),
+            photos: getRandomElement(announcementPhotos)
+          },
+          location: {
+            x: randomPositionX,
+            y: randomPositionY
+          }
+        });
   }
 };
 
@@ -162,8 +161,8 @@ var activateMap = function (evt) {
 
   var generatePin = function () {
     var item = document.createDocumentFragment();
-    for (var i = 0; i < announcementLength; i++) {
-      item.appendChild(createPin(announcements[i]));
+    for (var k = 0; k < announcementLength; k++) {
+      item.appendChild(createPin(announcements[k]));
     }
 
     mapPins.appendChild(item);
@@ -171,8 +170,8 @@ var activateMap = function (evt) {
 
   generatePin();
 
-  for (var i = 0; i < noticeFieldset.length; i++) {
-    noticeFieldset[i].removeAttribute('disabled');
+  for (var a = 0; a < noticeFieldset.length; a++) {
+    noticeFieldset[a].removeAttribute('disabled');
   }
 };
 
@@ -181,11 +180,7 @@ mapPinMain.addEventListener('mousedown', activateMap);
 
 var roomNumber = document.getElementById('room_number');
 var capacity = document.getElementById('capacity');
-
-
-var selectRoomNumber = roomNumber.getElementsByTagName('option');
 var selectCapacity = capacity.getElementsByTagName('option');
-
 
 var setCapacity = function () {
   selectCapacity[1].classList.add('hidden');
@@ -194,12 +189,12 @@ var setCapacity = function () {
 };
 setCapacity();
 
-roomNumber.addEventListener("change", function () {
+roomNumber.addEventListener('change', function () {
   if (roomNumber.value === '1') {
     setCapacity();
     selectCapacity[0].classList.remove('hidden');
   } else if (roomNumber.value === '2') {
-   setCapacity();
+    setCapacity();
     selectCapacity[0].classList.remove('hidden');
     selectCapacity[1].classList.remove('hidden');
   } else if (roomNumber.value === '3') {
@@ -211,6 +206,7 @@ roomNumber.addEventListener("change", function () {
     setCapacity();
     selectCapacity[0].classList.add('hidden');
     selectCapacity[3].classList.remove('hidden');
-  } else setCapacity();
+  } else {
+    setCapacity();
+  }
 });
-
