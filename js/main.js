@@ -187,29 +187,30 @@ var selectRoomNumber = roomNumber.getElementsByTagName('option');
 var selectCapacity = capacity.getElementsByTagName('option');
 
 
-// вот здесь я уже не очень понимаю, что дальше. сейчас работает так: при 1 комнате показывает для 1 гостя, при 2х комнатах - для 1 и 2 гостей, при 3х комнатах - для 1, 2 и 3 гостей,
-// но если я потом выбираю опять, например, 2 комнаты, то количество гостей уже не изменяется. понимаю, что надо остановить eventlistener, но не понимаю где и как. Помоги, пожалуйста. мелочь, а не заходит
-
-
-selectCapacity[1].classList.add('hidden');
-selectCapacity[2].classList.add('hidden');
-selectCapacity[3].classList.add('hidden');
-
+var setCapacity = function () {
+  selectCapacity[1].classList.add('hidden');
+  selectCapacity[2].classList.add('hidden');
+  selectCapacity[3].classList.add('hidden');
+};
+setCapacity();
 
 roomNumber.addEventListener("change", function () {
-  if (roomNumber.value === '2') {
+  if (roomNumber.value === '1') {
+    setCapacity();
+    selectCapacity[0].classList.remove('hidden');
+  } else if (roomNumber.value === '2') {
+   setCapacity();
+    selectCapacity[0].classList.remove('hidden');
     selectCapacity[1].classList.remove('hidden');
   } else if (roomNumber.value === '3') {
+    setCapacity();
+    selectCapacity[0].classList.remove('hidden');
     selectCapacity[1].classList.remove('hidden');
     selectCapacity[2].classList.remove('hidden');
   } else if (roomNumber.value === '100') {
+    setCapacity();
     selectCapacity[0].classList.add('hidden');
     selectCapacity[3].classList.remove('hidden');
-  }
+  } else setCapacity();
 });
 
-// 1 комната — «для 1 гостя»;
-// 2 комнаты — «для 2 гостей» или «для 1 гостя»;
-// 3 комнаты — «для 3 гостей», «для 2 гостей» или «для 1 гостя»;
-// 100 комнат — «не для гостей».
-//
