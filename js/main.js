@@ -77,8 +77,8 @@ var inputAdres = document.getElementById('address');
 var map = document.querySelector('.map');
 var mapPinMain = document.querySelector('.map__pin--main');
 
-var card = document.querySelector('#card').content.querySelector('.popup');
-var filterContainer = document.querySelector('.map__filters-container');
+// var card = document.querySelector('#card').content.querySelector('.popup');
+// var filterContainer = document.querySelector('.map__filters-container');
 
 for (var i = 0; i < noticeFieldset.length; i++) {
   noticeFieldset[i].setAttribute('disabled', 'disabled');
