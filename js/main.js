@@ -1,5 +1,5 @@
 'use strict';
-
+// 1
 var annoucementTitle = ['Заголовок объявления 1', 'Заголовок объявления 2', 'Заголовок объявления 3', 'Заголовок объявления 4', 'Заголовок объявления 5', 'Заголовок объявления 6', 'Заголовок объявления 7', 'Заголовок объявления 8'];
 var annoucementPriceMin = 0;
 var annoucementPriceMax = 1000000;
@@ -66,6 +66,8 @@ var createAnnoucementItem = function () {
 
 createAnnoucementItem(announcementLength);
 
+// 2
+
 var mapPin = document.querySelector('#pin').content.querySelector('button');
 var pinWidth = 50;
 var pinHeight = 70;
@@ -92,6 +94,8 @@ var MOUSE_LEFT = 0;
 var ENTER_KEY = 'Enter';
 
 inputAdres.setAttribute('placeholder', MAPPINX + ',' + MAPPINY);
+
+// 4
 
 var activateMap = function (evt) {
   if (evt.key === ENTER_KEY) {
@@ -175,6 +179,9 @@ var activateMap = function (evt) {
 
 mapPinMain.addEventListener('keydown', activateMap);
 mapPinMain.addEventListener('mousedown', activateMap);
+
+
+// 5
 
 var roomNumber = document.getElementById('room_number');
 var capacity = document.getElementById('capacity');
