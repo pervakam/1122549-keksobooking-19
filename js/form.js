@@ -2,11 +2,9 @@
 
 (function () {
   var inputAdres = document.getElementById('address');
-  var MAPPINWIDTH = 62;
-  var MAPPINHEIGHT = 84;
   var mapPinMain = document.querySelector('.map__pin--main');
-  var MAPPINX = parseFloat(mapPinMain.style.left) + MAPPINWIDTH / 2;
-  var MAPPINY = parseFloat(mapPinMain.style.top) + MAPPINHEIGHT;
+  var mapPinX = parseFloat(mapPinMain.style.left) + window.util.MAP_PIN_WIDTH / 2;
+  var mapPinY = parseFloat(mapPinMain.style.top) + window.util.MAP_PIN_HEIGHT;
   var notice = document.querySelector('.notice');
   var form = document.querySelector('.ad-form');
   var noticeFieldset = notice.querySelectorAll('fieldset');
@@ -14,8 +12,7 @@
   var capacity = document.getElementById('capacity');
   var selectCapacity = capacity.getElementsByTagName('option');
 
-
-  inputAdres.setAttribute('placeholder', MAPPINX + ',' + MAPPINY);
+  inputAdres.setAttribute('placeholder', mapPinX + ',' + mapPinY);
 
   for (var i = 0; i < noticeFieldset.length; i++) {
     noticeFieldset[i].setAttribute('disabled', 'disabled');
@@ -51,13 +48,10 @@
   });
 
   var activateForm = function (evt) {
-    var MOUSE_LEFT = 0;
-    var ENTER_KEY = 'Enter';
-
-    if (evt.key === ENTER_KEY) {
+    if (evt.key === window.util.ENTER_KEY) {
       form.classList.remove('ad-form--disabled');
     }
-    if (evt.button === MOUSE_LEFT) {
+    if (evt.button === window.util.MOUSE_LEFT) {
       form.classList.remove('ad-form--disabled');
     }
 
