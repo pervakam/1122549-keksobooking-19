@@ -10,12 +10,12 @@
 
     if (evt.key === ENTER_KEY) {
       map.classList.remove('map--faded');
-      window.pins.generatePin()
+      window.pins.generatePin();
 
     }
     if (evt.button === MOUSE_LEFT) {
       map.classList.remove('map--faded');
-      window.pins.generatePin()
+      window.pins.generatePin();
     }
 
   };

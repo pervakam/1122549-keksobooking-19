@@ -38,29 +38,28 @@
       var randomPositionY = getRandomInteger(announcementLocationYMin, announcementLocationYMax);
 
       announcements.push(
-        {
-          author: {
-            avatar: 'img/avatars/user0' + (j + 1) + '.png'
-          },
-          offer: {
-            title: getRandomElement(annoucementTitle),
-            address: randomPositionX + ',' + randomPositionY,
-            price: getRandomInteger(annoucementPriceMin, annoucementPriceMax),
-            type: getRandomElement(annoucementType),
-            rooms: getRandomElement(annoucementRooms),
-            guests: getRandomElement(annoucementGuests),
-            checkin: getRandomElement(annoucementCheckin),
-            checkout: getRandomElement(annoucementCheckout),
-            features: getRandomArray(annoucementFeatures),
-            description: getRandomElement(announcementDescription),
-            photos: getRandomElement(announcementPhotos)
-          },
-          location: {
-            x: randomPositionX,
-            y: randomPositionY
-          }
-        });
-
+          {
+            author: {
+              avatar: 'img/avatars/user0' + (j + 1) + '.png'
+            },
+            offer: {
+              title: getRandomElement(annoucementTitle),
+              address: randomPositionX + ',' + randomPositionY,
+              price: getRandomInteger(annoucementPriceMin, annoucementPriceMax),
+              type: getRandomElement(annoucementType),
+              rooms: getRandomElement(annoucementRooms),
+              guests: getRandomElement(annoucementGuests),
+              checkin: getRandomElement(annoucementCheckin),
+              checkout: getRandomElement(annoucementCheckout),
+              features: getRandomArray(annoucementFeatures),
+              description: getRandomElement(announcementDescription),
+              photos: getRandomElement(announcementPhotos)
+            },
+            location: {
+              x: randomPositionX,
+              y: randomPositionY
+            }
+          });
     }
     window.data = {
       announcements: announcements
