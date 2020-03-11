@@ -11,6 +11,10 @@
   var roomNumber = document.getElementById('room_number');
   var capacity = document.getElementById('capacity');
   var selectCapacity = capacity.getElementsByTagName('option');
+  var priceInput = form.querySelector('#price');
+  var typeInput = form.querySelector('#type');
+  var timeInInput = form.querySelector('#timein');
+  var timeOutInput = form.querySelector('#timeout');
 
   inputAdres.setAttribute('placeholder', mapPinX + ',' + mapPinY);
 
@@ -22,6 +26,7 @@
     selectCapacity[1].classList.add('hidden');
     selectCapacity[2].classList.add('hidden');
     selectCapacity[3].classList.add('hidden');
+    selectCapacity[3].removeAttribute('selected', 'selected');
   };
   setCapacity();
 
@@ -42,6 +47,7 @@
       setCapacity();
       selectCapacity[0].classList.add('hidden');
       selectCapacity[3].classList.remove('hidden');
+      selectCapacity[3].setAttribute('selected', 'selected');
     } else {
       setCapacity();
     }
@@ -60,7 +66,38 @@
     }
   };
 
+  var selectHousingHandler = function (evt) {
+    var target = evt.target;
+
+    if (target.value === 'bungalo') {
+      priceInput.min = 0;
+    } else if (target.value === 'flat') {
+      priceInput.min = 1000;
+    } else if (target.value === 'house') {
+      priceInput.min = 5000;
+    } else if (target.value === 'palace') {
+      priceInput.min = 10000;
+    }
+
+    priceInput.placeholder = priceInput.min;
+  };
+
+  var timeCheckHandler = function (evt) {
+    var chosenInput = (evt.target === timeInInput) ? timeInInput : timeOutInput;
+    var remainingInput = (evt.target === timeInInput) ? timeOutInput : timeInInput;
+
+    if (chosenInput.value === '12:00') {
+      remainingInput.value = chosenInput.value;
+    } else if (chosenInput.value === '13:00') {
+      remainingInput.value = chosenInput.value;
+    } else if (chosenInput.value === '14:00') {
+      remainingInput.value = chosenInput.value;
+    }
+  };
+
   mapPinMain.addEventListener('keydown', activateForm);
   mapPinMain.addEventListener('mousedown', activateForm);
-
+  typeInput.addEventListener('change', selectHousingHandler);
+  timeOutInput.addEventListener('change', timeCheckHandler);
+  timeInInput.addEventListener('change', timeCheckHandler);
 })();

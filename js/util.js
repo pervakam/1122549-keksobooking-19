@@ -3,6 +3,7 @@
 (function () {
   var MOUSE_LEFT = 0;
   var ENTER_KEY = 'Enter';
+  var ESC_KEY = 'Escape';
   var MAP_PIN_WIDTH = 62;
   var MAP_PIN_HEIGHT = 84;
 
@@ -13,6 +14,7 @@
   window.util = {
     MOUSE_LEFT: MOUSE_LEFT,
     ENTER_KEY: ENTER_KEY,
+    ESC_KEY: ESC_KEY,
     MAP_PIN_WIDTH: MAP_PIN_WIDTH,
     MAP_PIN_HEIGHT: MAP_PIN_HEIGHT,
 

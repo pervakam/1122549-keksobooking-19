@@ -2,21 +2,27 @@
 
 (function () {
   var mapPinMain = document.querySelector('.map__pin--main');
+  var mapPins = document.querySelector('.map__pins');
+  var map = document.querySelector('.map');
+  var mapPinNew = document.querySelectorAll('.map__pinnew');
+
+  var activationPin = function () {
+    map.classList.remove('map--faded');
+    window.pins.generatePin();
+    window.load.loadCardContent();
+  };
 
   var activateMap = function (evt) {
-    var map = document.querySelector('.map');
-
-    if (evt.key === window.util.ENTER_KEY) {
-      map.classList.remove('map--faded');
-      window.pins.generatePin();
-
-    }
-    if (evt.button === window.util.MOUSE_LEFT) {
-      map.classList.remove('map--faded');
-      window.pins.generatePin();
+    if (evt.key === window.util.ENTER_KEY || evt.button === window.util.MOUSE_LEFT) {
+      activationPin();
+      mapPinMain.removeEventListener('keydown', activateMap);
+      mapPinMain.removeEventListener('mousedown', activateMap);
     }
   };
 
   mapPinMain.addEventListener('keydown', activateMap);
   mapPinMain.addEventListener('mousedown', activateMap);
+
+
 })();
+
