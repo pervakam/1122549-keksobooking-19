@@ -10,17 +10,18 @@
   var pinAfter = getComputedStyle(mapPinMain, '::after').getPropertyValue('border-top-width');
   var pinAfterTop = parseInt(pinAfter, 10);
 
+
   var cardLength = 8;
 
 
   var generatePin = function () {
     var item = document.createDocumentFragment();
 
-    for (var k = 0; k < 10; k++) {
+    for (var k = 0; k < 8; k++) {
       var pinElement = mapPin.cloneNode(true);
       var card = window.data.cards;
       var pinPositionLeft = (card[k].location.x - (pinWidth / 2)) + 'px';
-      var pinPositionTop = (card[k].location.y - pinHeight) + 'px;';
+      var pinPositionTop = (card[k].location.y - pinHeight) + 'px';
       pinElement.style.left = pinPositionLeft;
       pinElement.style.top = pinPositionTop;
       pinElement.querySelector('img').src = card[k].author.avatar;
@@ -30,7 +31,23 @@
       item.appendChild(pinElement);
 
       var pinHandler = function () {
-        window.card.createCard(card);
+        window.load.loadCardContent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // window.card.createCard();
       };
 
       pinElement.addEventListener('click', pinHandler);

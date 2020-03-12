@@ -57,7 +57,7 @@
       cards: cards
     };
 
-    console.log(cards);
+
   };
 
   fillCard()

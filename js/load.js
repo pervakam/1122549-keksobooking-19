@@ -15,13 +15,11 @@
   };
 
   var onSuccess = function (data) {
-    window.card.createCard(data);
-    console.log(window.card.createCard(data));
+      window.card.createCard(data);
   };
 
   var loadCardContent = function () {
     var xhr = new XMLHttpRequest();
-
 
     xhr.responseType = 'json';
     xhr.timeout = timeOut;
