@@ -9,49 +9,29 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var pinAfter = getComputedStyle(mapPinMain, '::after').getPropertyValue('border-top-width');
   var pinAfterTop = parseInt(pinAfter, 10);
-
+  var pinElements = [];
 
   var cardLength = 8;
 
 
-  var generatePin = function () {
+  var generatePin = function (card) {
     var item = document.createDocumentFragment();
 
     for (var k = 0; k < 8; k++) {
+      var selectedPin = card[k];
       var pinElement = mapPin.cloneNode(true);
-      var card = window.data.cards;
-      var pinPositionLeft = (card[k].location.x - (pinWidth / 2)) + 'px';
-      var pinPositionTop = (card[k].location.y - pinHeight) + 'px';
+      var pinPositionLeft = (selectedPin.location.x - (pinWidth / 2)) + 'px';
+      var pinPositionTop = (selectedPin.location.y - pinHeight) + 'px';
+
       pinElement.style.left = pinPositionLeft;
       pinElement.style.top = pinPositionTop;
-      pinElement.querySelector('img').src = card[k].author.avatar;
-      pinElement.querySelector('img').alt = card[k].offer.title;
+      pinElement.querySelector('img').src = selectedPin.author.avatar;
+      pinElement.querySelector('img').alt = selectedPin.offer.title;
       pinElement.classList.add('map__pin-new');
 
       item.appendChild(pinElement);
 
-      var pinHandler = function () {
-        window.load.loadCardContent
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // window.card.createCard();
-      };
-
-      pinElement.addEventListener('click', pinHandler);
-
+      pinElement.addEventListener('click', window.card.createCard(selectedPin));
     }
 
     mapPins.appendChild(item);

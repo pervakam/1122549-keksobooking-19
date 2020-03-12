@@ -15,7 +15,8 @@
   };
 
   var onSuccess = function (data) {
-      window.card.createCard(data);
+    window.pins.generatePin(data);
+    console.log(data)
   };
 
   var loadCardContent = function () {

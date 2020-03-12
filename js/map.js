@@ -8,7 +8,6 @@
 
   var activationPin = function () {
     map.classList.remove('map--faded');
-    window.pins.generatePin();
     window.load.loadCardContent();
   };
 
