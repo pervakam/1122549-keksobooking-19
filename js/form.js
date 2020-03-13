@@ -53,19 +53,6 @@
     }
   });
 
-  var activateForm = function (evt) {
-    if (evt.key === window.util.ENTER_KEY) {
-      form.classList.remove('ad-form--disabled');
-    }
-    if (evt.button === window.util.MOUSE_LEFT) {
-      form.classList.remove('ad-form--disabled');
-    }
-
-    for (var a = 0; a < noticeFieldset.length; a++) {
-      noticeFieldset[a].removeAttribute('disabled');
-    }
-  };
-
   var selectHousingHandler = function (evt) {
     var target = evt.target;
 
@@ -95,8 +82,6 @@
     }
   };
 
-  mapPinMain.addEventListener('keydown', activateForm);
-  mapPinMain.addEventListener('mousedown', activateForm);
   typeInput.addEventListener('change', selectHousingHandler);
   timeOutInput.addEventListener('change', timeCheckHandler);
   timeInInput.addEventListener('change', timeCheckHandler);

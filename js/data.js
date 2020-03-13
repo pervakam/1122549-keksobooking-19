@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var cardTitle = ['Заголовок объявления 1', 'Заголовок объявления 2', 'Заголовок объявления 3', 'Заголовок объявления 4', 'Заголовок объявления 5', 'Заголовок объявления 6', 'Заголовок объявления 7', 'Заголовок объявления 8'];
+  var cardTitle = [];
   var cardPriceMin = 0;
   var cardPriceMax = 1000000;
   var cardType = ['palace', 'flat', 'house', 'bungalo'];
@@ -10,8 +10,8 @@
   var cardCheckin = ['12:00', '13:00', '14:00'];
   var cardCheckout = ['12:00', '13:00', '14:00'];
   var cardFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var cardDescription = ['Описание 1', 'Описание 2', 'Описание 3', 'Описание 4', 'Описание 5', 'Описание 6', 'Описание 7', 'Описание 8'];
-  var cardPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+  var cardDescription = [];
+  var cardPhotos = [];
   var cardLocationXMin = 0;
   var cardLocationXMax = 1200;
   var cardLocationYMin = 130;
@@ -57,10 +57,6 @@
       cards: cards
     };
 
-
   };
-
-  fillCard()
-
 
 })();

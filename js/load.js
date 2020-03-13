@@ -10,16 +10,7 @@
   var statusOK = 200;
   var timeOut = 10000;
 
-  var onError = function (message) {
-    console.error(message);
-  };
-
-  var onSuccess = function (data) {
-    window.pins.generatePin(data);
-    console.log(data)
-  };
-
-  var loadCardContent = function () {
+  var load = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -33,17 +24,22 @@
       }
     });
 
-
     xhr.addEventListener('error', function () {
       onError(serverMessages.errorConnect);
     });
     xhr.addEventListener('timeout', function () {
       onError(serverMessages.errorTimeout + xhr.timeout + 'мс');
     });
+
+    return xhr;
+  };
+
+  var loadCardContent = function (onSuccess, onError) {
+    var xhr = load(onSuccess, onError);
+
     xhr.open('GET', url);
     xhr.send();
   };
-
 
   window.load = {
     loadCardContent: loadCardContent
