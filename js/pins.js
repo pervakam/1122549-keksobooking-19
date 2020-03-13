@@ -1,36 +1,94 @@
 'use strict';
 
 (function () {
-  var mapPin = document.querySelector('#pin').content.querySelector('button');
+  var mapPin = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinWidth = 50;
   var pinHeight = 70;
-  var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
-  var announcements = window.data.announcements;
-  var announcementLength = 8;
+  var map = document.querySelector('.map');
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var pinAfter = getComputedStyle(mapPinMain, '::after').getPropertyValue('border-top-width');
+  var pinAfterTop = parseInt(pinAfter, 10);
+  var fragment = document.createDocumentFragment();
+
+  var generatePin = function (pinCard) {
+    var pinElement = mapPin.cloneNode(true);
+    var pinImage = pinElement.querySelector('img');
+    var pinPositionLeft = (pinCard.location.x - (pinWidth / 2)) + 'px';
+    var pinPositionTop = (pinCard.location.y - pinHeight) + 'px';
+
+    pinElement.style.left = pinPositionLeft;
+    pinElement.style.top = pinPositionTop;
+    pinImage.src = pinCard.author.avatar;
+    pinImage.alt = pinCard.offer.title;
+    pinElement.classList.add('map__pin-new');
+
+    var pinClick = function () {
+      var mapCard = map.querySelector('.map__card');
+      if (mapCard) {
+        mapCard.remove();
+      }
+      window.card.createCard(pinCard);
+      pinElement.classList.add('map__pin--active');
+    };
+
+    pinElement.addEventListener('click', pinClick);
+    return pinElement;
+  };
+
+  var generatePins = function (pinCard) {
+    for (var i = 0; i < window.util.PINS_QUANTITY; i++) {
+      var pinElement = generatePin(pinCard[i]);
+      fragment.appendChild(pinElement);
+    }
+    mapPins.appendChild(fragment);
+  };
+
+  mapPinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (evtMove) {
+      evtMove.preventDefault();
+      var shift = {
+        x: startCoords.x - evtMove.clientX,
+        y: startCoords.y - evtMove.clientY
+      };
+      startCoords = {
+        x: evtMove.clientX,
+        y: evtMove.clientY
+      };
+      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+
+      if (mapPinMain.offsetLeft > map.offsetWidth - mapPinMain.offsetWidth) {
+        mapPinMain.style.left = (map.offsetWidth - mapPinMain.offsetWidth) + 'px';
+      } else if (mapPinMain.offsetTop > map.offsetHeight - mapPinMain.offsetHeight - pinAfterTop) {
+        mapPinMain.style.top = (map.offsetHeight - mapPinMain.offsetHeight - pinAfterTop) + 'px';
+      } else if (mapPinMain.offsetTop < map.offsetTop) {
+        mapPinMain.style.top = map.offsetTop + 'px';
+      } else if (mapPinMain.offsetLeft < map.offsetTop) {
+        mapPinMain.style.left = map.offsetTop + 'px';
+      }
+    };
+
+    var onMouseUp = function (evtUp) {
+      evtUp.preventDefault();
+
+      map.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    map.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
   window.pins = {
-    generatePin: function () {
-      var item = document.createDocumentFragment();
-
-      for (var k = 0; k < announcementLength; k++) {
-
-        var createPin = function () {
-          var pinElement = mapPin.cloneNode(true);
-          var pinPosition = 'left: ' + (announcements[k].location.x - (pinWidth / 2)) + 'px; top: ' + (announcements[k].location.y - pinHeight) + 'px;';
-
-          map.appendChild(pinElement);
-          pinElement.style = pinPosition;
-          pinElement.querySelector('img').src = announcements[k].author.avatar;
-          pinElement.querySelector('img').alt = announcements[k].offer.title;
-          return pinElement;
-        };
-
-        item.appendChild(createPin());
-
-      }
-      mapPins.appendChild(item);
-
-    }
+    generatePins: generatePins
   };
-})();
+}
+)();
