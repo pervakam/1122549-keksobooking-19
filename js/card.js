@@ -6,6 +6,12 @@
   var map = document.querySelector('.map');
   var filterContainer = document.querySelector('.map__filters-container');
   var mapCard;
+  var offerType = {
+    palace: 'Дворец',
+    flat: 'Квартира',
+    house: 'Дом',
+    bungalo: 'Бунгало'
+  };
 
   var createCard = function (card) {
     var fragment = document.createDocumentFragment();
@@ -16,7 +22,7 @@
     cardElement.querySelector('.popup__title').textContent = card.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = card.offer.type;
+    cardElement.querySelector('.popup__type').textContent = offerType[card.offer.type];
     cardElement.querySelector('.popup__text--capacity').textContent = (card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей');
     cardElement.querySelector('.popup__text--time').textContent = ('Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout);
     cardElement.querySelector('.popup__features').replaceWith(createFeatures(card));
@@ -30,7 +36,6 @@
     var skipPinMark = function () {
       var mapPin = document.querySelectorAll('.map__pin-new');
       for (var i = 0; i < mapPin.length; i++) {
-        console.log(mapPin);
         mapPin[i].classList.remove('map__pin--active');
       }
     };
@@ -79,8 +84,5 @@
     createCard: createCard,
     closeCardByKey: closeCardByKey,
     closeCard: closeCard
-  }
+  };
 })();
-
-
-

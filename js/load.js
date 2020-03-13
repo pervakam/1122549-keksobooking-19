@@ -43,5 +43,5 @@
 
   window.load = {
     loadCardContent: loadCardContent
-  }
+  };
 })();

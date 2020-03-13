@@ -25,8 +25,9 @@
 
     var pinClick = function () {
       var mapCard = map.querySelector('.map__card');
-
-      mapCard ? mapCard.remove() : null;
+      if (mapCard) {
+        mapCard.remove();
+      }
       window.card.createCard(pinCard);
       pinElement.classList.add('map__pin--active');
     };
