@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var serverData;
   var url = 'https://js.dump.academy/keksobooking/data';
   var serverMessages = {
     errorConnect: 'Произошла ошибка соединения',
@@ -30,6 +31,11 @@
     xhr.addEventListener('timeout', function () {
       onError(serverMessages.errorTimeout + xhr.timeout + 'мс');
     });
+    xhr.addEventListener('load', function () {
+      window.load.serverData = xhr.response;
+
+    });
+
 
     return xhr;
   };
@@ -37,11 +43,13 @@
   var loadCardContent = function (onSuccess, onError) {
     var xhr = load(onSuccess, onError);
 
+
     xhr.open('GET', url);
     xhr.send();
   };
 
   window.load = {
-    loadCardContent: loadCardContent
+    loadCardContent: loadCardContent,
+
   };
 })();

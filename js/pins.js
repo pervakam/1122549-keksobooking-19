@@ -37,7 +37,7 @@
   };
 
   var generatePins = function (pinCard) {
-    for (var i = 0; i < window.util.PINS_QUANTITY; i++) {
+    for (var i = 0; i < 4; i++) {
       var pinElement = generatePin(pinCard[i]);
       fragment.appendChild(pinElement);
     }

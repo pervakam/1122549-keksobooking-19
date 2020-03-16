@@ -82,7 +82,18 @@
     }
   };
 
+  var noticeActivate = function (fieldset) {
+    for (var a = 0; a < fieldset.length; a++) {
+      fieldset[a].removeAttribute('disabled');
+    }
+  };
+
   typeInput.addEventListener('change', selectHousingHandler);
   timeOutInput.addEventListener('change', timeCheckHandler);
   timeInInput.addEventListener('change', timeCheckHandler);
+
+
+  window.form = {
+    noticeActivate: noticeActivate
+  }
 })();
