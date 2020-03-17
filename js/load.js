@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var serverData;
-  var url = 'https://js.dump.academy/keksobooking/data';
+
+  var loadURL = 'https://js.dump.academy/keksobooking/data';
+  var uploadURL = 'https://js.dump.academy/keksobooking';
   var serverMessages = {
     errorConnect: 'Произошла ошибка соединения',
     errorTimeout: 'Запрос не успел выполниться за ',
@@ -24,18 +25,12 @@
         onError(serverMessages.responseStatus + xhr.status + ' ' + xhr.statusText);
       }
     });
-
     xhr.addEventListener('error', function () {
       onError(serverMessages.errorConnect);
     });
     xhr.addEventListener('timeout', function () {
       onError(serverMessages.errorTimeout + xhr.timeout + 'мс');
     });
-    xhr.addEventListener('load', function () {
-      window.load.serverData = xhr.response;
-
-    });
-
 
     return xhr;
   };
@@ -43,13 +38,19 @@
   var loadCardContent = function (onSuccess, onError) {
     var xhr = load(onSuccess, onError);
 
-
-    xhr.open('GET', url);
+    xhr.open('GET', loadURL);
     xhr.send();
+  };
+
+  var sendForm = function (data, onSuccess, onError) {
+    var xhr = load(onSuccess, onError);
+
+    xhr.open('POST', uploadURL);
+    xhr.send(data);
   };
 
   window.load = {
     loadCardContent: loadCardContent,
-
+    sendForm: sendForm
   };
 })();

@@ -13,6 +13,13 @@
     bungalo: 'Бунгало'
   };
 
+  var skipPinMark = function () {
+    var mapPinActive = document.querySelector('.map__pin--active');
+    if (mapPinActive) {
+      mapPinActive.classList.remove('map__pin--active');
+    }
+  };
+
   var createCard = function (card) {
     var fragment = document.createDocumentFragment();
     var cardElement = baseCard.cloneNode(true);
@@ -33,17 +40,8 @@
     map.insertBefore(fragment, filterContainer);
     mapCard = cardElement;
 
-    var skipPinMark = function () {
-      var mapPin = document.querySelectorAll('.map__pin-new');
-      for (var i = 0; i < mapPin.length; i++) {
-        mapPin[i].classList.remove('map__pin--active');
-      }
-    };
-
     window.addEventListener('keydown', closeCardByKey);
     closeCardButton.addEventListener('click', closeCard);
-    window.addEventListener('keydown', skipPinMark);
-    closeCardButton.addEventListener('click', skipPinMark);
   };
 
   var closeCardByKey = function (evt) {
@@ -57,7 +55,7 @@
       mapCard.remove();
       mapCard = null;
     }
-
+    skipPinMark();
   };
 
   var createFeatures = function (card) {
