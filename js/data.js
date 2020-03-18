@@ -18,6 +18,7 @@
   var cardLocationYMax = 630;
   var cards = [];
   var cardLength = 10;
+  var serverData = null;
 
   var getRandomInteger = window.util.getRandomInteger;
   var getRandomElement = window.util.getRandomElement;
@@ -53,11 +54,13 @@
             }
           });
     }
-    window.data = {
-      cards: cards
-    };
+
 
   };
 
   fillCard();
+
+  window.data = {
+    serverData: serverData
+  };
 })();

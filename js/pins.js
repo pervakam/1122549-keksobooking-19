@@ -2,6 +2,7 @@
 
 (function () {
   var mapPin = document.querySelector('#pin').content.querySelector('.map__pin');
+  var inputAdres = document.getElementById('address');
   var pinWidth = 50;
   var pinHeight = 70;
   var mapPins = document.querySelector('.map__pins');
@@ -26,7 +27,7 @@
     var pinClick = function () {
       var mapCard = map.querySelector('.map__card');
       if (mapCard) {
-        mapCard.remove();
+        window.card.closeCard();
       }
       window.card.createCard(pinCard);
       pinElement.classList.add('map__pin--active');
@@ -37,10 +38,14 @@
   };
 
   var generatePins = function (pinCard) {
-    for (var i = 0; i < window.util.PINS_QUANTITY; i++) {
+    var maxLength = pinCard.length > window.util.PINS_QUANTITY ? 5 : pinCard.length;
+
+    for (var i = 0; i < maxLength; i++) {
       var pinElement = generatePin(pinCard[i]);
+
       fragment.appendChild(pinElement);
     }
+
     mapPins.appendChild(fragment);
   };
 
@@ -76,6 +81,11 @@
       }
     };
 
+    map.addEventListener('mousemove', function () {
+      inputAdres.value = startCoords.x + ',' + startCoords.y;
+    }
+    );
+
     var onMouseUp = function (evtUp) {
       evtUp.preventDefault();
 
@@ -87,8 +97,17 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  var removePins = function () {
+    var mapPinsNew = mapPins.querySelectorAll('.map__pin-new');
+
+    for (var i = 0; i < mapPinsNew.length; i++) {
+      mapPinsNew[i].remove();
+    }
+  };
+
   window.pins = {
-    generatePins: generatePins
+    generatePins: generatePins,
+    removePins: removePins
   };
 }
 )();

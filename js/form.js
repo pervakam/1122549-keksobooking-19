@@ -6,21 +6,79 @@
   var mapPinX = parseFloat(mapPinMain.style.left) + window.util.MAP_PIN_WIDTH / 2;
   var mapPinY = parseFloat(mapPinMain.style.top) + window.util.MAP_PIN_HEIGHT;
   var notice = document.querySelector('.notice');
-  var form = document.querySelector('.ad-form');
+  var announcementForm = document.querySelector('.ad-form');
   var noticeFieldset = notice.querySelectorAll('fieldset');
   var roomNumber = document.getElementById('room_number');
   var capacity = document.getElementById('capacity');
   var selectCapacity = capacity.getElementsByTagName('option');
-  var priceInput = form.querySelector('#price');
-  var typeInput = form.querySelector('#type');
-  var timeInInput = form.querySelector('#timein');
-  var timeOutInput = form.querySelector('#timeout');
+  var titleInput = announcementForm.querySelector('#title');
+  var priceInput = announcementForm.querySelector('#price');
+  var typeInput = announcementForm.querySelector('#type');
+  var timeInInput = announcementForm.querySelector('#timein');
+  var timeOutInput = announcementForm.querySelector('#timeout');
+  var descriptionInput = announcementForm.querySelector('#description');
+  var resetButton = announcementForm.querySelector('.ad-form__reset');
+  var filterForm = document.querySelector('.map__filters');
 
-  inputAdres.setAttribute('placeholder', mapPinX + ',' + mapPinY);
 
-  for (var i = 0; i < noticeFieldset.length; i++) {
-    noticeFieldset[i].setAttribute('disabled', 'disabled');
-  }
+  var resetAnnouncementForm = function () {
+    var emptyInput = '';
+
+    titleInput.value = emptyInput;
+    priceInput.value = emptyInput;
+    descriptionInput.value = emptyInput;
+  };
+
+  var resetButtonHandler = function () {
+    resetAnnouncementForm();
+    filterForm.reset();
+    window.pins.removePins();
+    window.card.closeCard();
+    window.filter.filterPins();
+    mapPinMain.style.left = parseFloat(window.util.DEFAULT_PIN_POSITION.x) + 'px';
+    mapPinMain.style.top = parseFloat(window.util.DEFAULT_PIN_POSITION.y) + 'px';
+  };
+
+  var defaultSettings = function () {
+    inputAdres.value = mapPinX + ',' + mapPinY;
+  };
+
+  defaultSettings();
+
+  var announcementFormDisabled = function () {
+    for (var i = 0; i < noticeFieldset.length; i++) {
+      noticeFieldset[i].setAttribute('disabled', 'disabled');
+    }
+  };
+
+  announcementFormDisabled();
+
+  var titleLengthControlHandler = function (evt) {
+    var target = evt.target;
+
+    if (target.validity.tooShort) {
+      target.setCustomValidity('Заголовок должен состоять минимум из ' + target.minLength + ' символов!');
+    } else if (target.validity.tooLong) {
+      target.setCustomValidity('Заголовок должен состоять максимум из ' + target.maxLength + ' символов!');
+    } else if (target.validity.valueMissing) {
+      target.setCustomValidity('Обязательное поле!');
+    } else {
+      target.setCustomValidity('');
+    }
+  };
+
+  var priceControlHandler = function () {
+
+    if (priceInput.value === '') {
+      priceInput.setCustomValidity('Обязательное поле!');
+    } else if (priceInput.value < priceInput.min) {
+      priceInput.setCustomValidity('Цена не должна быть ниже чем ' + priceInput.min);
+    } else if (priceInput.value > priceInput.max) {
+      priceInput.setCustomValidity('Цена не должна быть выше чем ' + priceInput.max);
+    } else {
+      priceInput.setCustomValidity('');
+    }
+  };
 
   var setCapacity = function () {
     selectCapacity[1].classList.add('hidden');
@@ -82,7 +140,41 @@
     }
   };
 
-  typeInput.addEventListener('change', selectHousingHandler);
-  timeOutInput.addEventListener('change', timeCheckHandler);
-  timeInInput.addEventListener('change', timeCheckHandler);
-})();
+  var noticeActivate = function (fieldset) {
+    for (var a = 0; a < fieldset.length; a++) {
+      fieldset[a].removeAttribute('disabled');
+    }
+  };
+
+  var submitHandler = function (evt) {
+    evt.preventDefault();
+    var filledForm = new FormData(announcementForm);
+
+    window.load.sendForm(filledForm, function () {
+      window.messages.successMessage();
+      window.pins.removePins();
+      window.card.closeCard();
+      resetAnnouncementForm();
+      window.map.initialState();
+    }, window.messages.errorMessage);
+
+  };
+
+  var setHandlers = function () {
+    announcementForm.addEventListener('submit', submitHandler);
+    titleInput.addEventListener('invalid', titleLengthControlHandler);
+    typeInput.addEventListener('change', selectHousingHandler);
+    timeOutInput.addEventListener('change', timeCheckHandler);
+    timeInInput.addEventListener('change', timeCheckHandler);
+    resetButton.addEventListener('click', resetButtonHandler);
+    priceInput.addEventListener('invalid', priceControlHandler);
+  };
+
+  window.form = {
+    noticeActivate: noticeActivate,
+    setHandlers: setHandlers,
+    resetAnnouncementForm: resetAnnouncementForm,
+    announcementFormDisabled: announcementFormDisabled
+  };
+}
+)();
