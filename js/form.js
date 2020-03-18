@@ -20,17 +20,30 @@
   var resetButton = announcementForm.querySelector('.ad-form__reset');
   var filterForm = document.querySelector('.map__filters');
 
+
   var resetAnnouncementForm = function () {
     var emptyInput = '';
 
     titleInput.value = emptyInput;
     priceInput.value = emptyInput;
     descriptionInput.value = emptyInput;
-    filterForm.reset();
-
   };
 
-  inputAdres.value = mapPinX + ',' + mapPinY;
+  var resetButtonHandler = function () {
+    resetAnnouncementForm();
+    filterForm.reset();
+    window.pins.removePins();
+    window.card.closeCard();
+    window.filter.filterPins();
+    mapPinMain.style.left = parseFloat(window.util.DEFAULT_PIN_POSITION.x) + 'px';
+    mapPinMain.style.top = parseFloat(window.util.DEFAULT_PIN_POSITION.y) + 'px';
+  };
+
+  var defaultSettings = function () {
+    inputAdres.value = mapPinX + ',' + mapPinY;
+  };
+
+  defaultSettings();
 
   var announcementFormDisabled = function () {
     for (var i = 0; i < noticeFieldset.length; i++) {
@@ -46,11 +59,24 @@
     if (target.validity.tooShort) {
       target.setCustomValidity('Заголовок должен состоять минимум из ' + target.minLength + ' символов!');
     } else if (target.validity.tooLong) {
-      target.setCustomValidity('Заголовок состоять максимум из ' + target.maxLength + ' символов!');
+      target.setCustomValidity('Заголовок должен состоять максимум из ' + target.maxLength + ' символов!');
     } else if (target.validity.valueMissing) {
       target.setCustomValidity('Обязательное поле!');
     } else {
       target.setCustomValidity('');
+    }
+  };
+
+  var priceControlHandler = function () {
+
+    if (priceInput.value === '') {
+      priceInput.setCustomValidity('Обязательное поле!');
+    } else if (priceInput.value < priceInput.min) {
+      priceInput.setCustomValidity('Цена не должна быть ниже чем ' + priceInput.min);
+    } else if (priceInput.value > priceInput.max) {
+      priceInput.setCustomValidity('Цена не должна быть выше чем ' + priceInput.max);
+    } else {
+      priceInput.setCustomValidity('');
     }
   };
 
@@ -128,9 +154,8 @@
       window.messages.successMessage();
       window.pins.removePins();
       window.card.closeCard();
-      window.form.resetAnnouncementForm();
+      resetAnnouncementForm();
       window.map.initialState();
-
     }, window.messages.errorMessage);
 
   };
@@ -141,7 +166,8 @@
     typeInput.addEventListener('change', selectHousingHandler);
     timeOutInput.addEventListener('change', timeCheckHandler);
     timeInInput.addEventListener('change', timeCheckHandler);
-    resetButton.addEventListener('click', resetAnnouncementForm);
+    resetButton.addEventListener('click', resetButtonHandler);
+    priceInput.addEventListener('invalid', priceControlHandler);
   };
 
   window.form = {
