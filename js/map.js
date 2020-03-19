@@ -37,6 +37,9 @@
   var initialState = function () {
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
+    window.pins.removePins();
+    window.pins.defaultMainPinPosition();
+    window.card.closeCard();
     window.form.announcementFormDisabled();
     window.filter.blockedFilter();
 

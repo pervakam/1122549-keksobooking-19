@@ -1,10 +1,11 @@
 'use strict';
 
 (function () {
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
+
   var mapPin = document.querySelector('#pin').content.querySelector('.map__pin');
   var inputAdres = document.getElementById('address');
-  var pinWidth = 50;
-  var pinHeight = 70;
   var mapPins = document.querySelector('.map__pins');
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -12,11 +13,16 @@
   var pinAfterTop = parseInt(pinAfter, 10);
   var fragment = document.createDocumentFragment();
 
+  var defaultMainPinPosition = function () {
+    mapPinMain.style.left = parseFloat(window.util.DEFAULT_PIN_POSITION.x) + 'px';
+    mapPinMain.style.top = parseFloat(window.util.DEFAULT_PIN_POSITION.y) + 'px';
+  };
+
   var generatePin = function (pinCard) {
     var pinElement = mapPin.cloneNode(true);
     var pinImage = pinElement.querySelector('img');
-    var pinPositionLeft = (pinCard.location.x - (pinWidth / 2)) + 'px';
-    var pinPositionTop = (pinCard.location.y - pinHeight) + 'px';
+    var pinPositionLeft = (pinCard.location.x - (PIN_WIDTH / 2)) + 'px';
+    var pinPositionTop = (pinCard.location.y - PIN_HEIGHT) + 'px';
 
     pinElement.style.left = pinPositionLeft;
     pinElement.style.top = pinPositionTop;
@@ -107,7 +113,8 @@
 
   window.pins = {
     generatePins: generatePins,
-    removePins: removePins
+    removePins: removePins,
+    defaultMainPinPosition: defaultMainPinPosition
   };
 }
 )();

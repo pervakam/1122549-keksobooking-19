@@ -3,8 +3,6 @@
 (function () {
   var inputAdres = document.getElementById('address');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var mapPinX = parseFloat(mapPinMain.style.left) + window.util.MAP_PIN_WIDTH / 2;
-  var mapPinY = parseFloat(mapPinMain.style.top) + window.util.MAP_PIN_HEIGHT;
   var notice = document.querySelector('.notice');
   var announcementForm = document.querySelector('.ad-form');
   var noticeFieldset = notice.querySelectorAll('fieldset');
@@ -18,25 +16,13 @@
   var timeOutInput = announcementForm.querySelector('#timeout');
   var descriptionInput = announcementForm.querySelector('#description');
   var resetButton = announcementForm.querySelector('.ad-form__reset');
-  var filterForm = document.querySelector('.map__filters');
 
+  var mapPinX = parseFloat(mapPinMain.style.left) + window.util.MAP_PIN_WIDTH / 2;
+  var mapPinY = parseFloat(mapPinMain.style.top) + window.util.MAP_PIN_HEIGHT;
 
-  var resetAnnouncementForm = function () {
-    var emptyInput = '';
-
-    titleInput.value = emptyInput;
-    priceInput.value = emptyInput;
-    descriptionInput.value = emptyInput;
-  };
 
   var resetButtonHandler = function () {
-    resetAnnouncementForm();
-    filterForm.reset();
-    window.pins.removePins();
-    window.card.closeCard();
-    window.filter.filterPins();
-    mapPinMain.style.left = parseFloat(window.util.DEFAULT_PIN_POSITION.x) + 'px';
-    mapPinMain.style.top = parseFloat(window.util.DEFAULT_PIN_POSITION.y) + 'px';
+    window.map.initialState();
   };
 
   var defaultSettings = function () {
@@ -46,9 +32,20 @@
   defaultSettings();
 
   var announcementFormDisabled = function () {
-    for (var i = 0; i < noticeFieldset.length; i++) {
-      noticeFieldset[i].setAttribute('disabled', 'disabled');
-    }
+    var emptyInput = '';
+
+    titleInput.value = emptyInput;
+    priceInput.value = emptyInput;
+    descriptionInput.value = emptyInput;
+
+    // for (var i = 0; i < noticeFieldset.length; i++) {
+    //   noticeFieldset[i].setAttribute('disabled', 'disabled');
+    // }
+
+    noticeFieldset.forEach(function (noticeFieldset) {
+      noticeFieldset.setAttribute('disabled', 'disabled');
+    })
+
   };
 
   announcementFormDisabled();
@@ -127,22 +124,22 @@
     priceInput.placeholder = priceInput.min;
   };
 
-  var timeCheckHandler = function (evt) {
-    var chosenInput = (evt.target === timeInInput) ? timeInInput : timeOutInput;
-    var remainingInput = (evt.target === timeInInput) ? timeOutInput : timeInInput;
-
-    if (chosenInput.value === '12:00') {
-      remainingInput.value = chosenInput.value;
-    } else if (chosenInput.value === '13:00') {
-      remainingInput.value = chosenInput.value;
-    } else if (chosenInput.value === '14:00') {
-      remainingInput.value = chosenInput.value;
-    }
-  };
+  // var timeCheckHandler = function (evt) {
+  //   var chosenInput = (evt.target === timeInInput) ? timeInInput : timeOutInput;
+  //   var remainingInput = (evt.target === timeInInput) ? timeOutInput : timeInInput;
+  //
+  //   if (chosenInput.value === '12:00') {
+  //     remainingInput.value = chosenInput.value;
+  //   } else if (chosenInput.value === '13:00') {
+  //     remainingInput.value = chosenInput.value;
+  //   } else if (chosenInput.value === '14:00') {
+  //     remainingInput.value = chosenInput.value;
+  //   }
+  // };
 
   var noticeActivate = function (fieldset) {
-    for (var a = 0; a < fieldset.length; a++) {
-      fieldset[a].removeAttribute('disabled');
+    for (var i = 0; i < fieldset.length; i++) {
+      fieldset[i].removeAttribute('disabled');
     }
   };
 
@@ -152,9 +149,6 @@
 
     window.load.sendForm(filledForm, function () {
       window.messages.successMessage();
-      window.pins.removePins();
-      window.card.closeCard();
-      resetAnnouncementForm();
       window.map.initialState();
     }, window.messages.errorMessage);
 
@@ -164,8 +158,8 @@
     announcementForm.addEventListener('submit', submitHandler);
     titleInput.addEventListener('invalid', titleLengthControlHandler);
     typeInput.addEventListener('change', selectHousingHandler);
-    timeOutInput.addEventListener('change', timeCheckHandler);
-    timeInInput.addEventListener('change', timeCheckHandler);
+    // timeOutInput.addEventListener('change', timeCheckHandler);
+    // timeInInput.addEventListener('change', timeCheckHandler);
     resetButton.addEventListener('click', resetButtonHandler);
     priceInput.addEventListener('invalid', priceControlHandler);
   };
@@ -173,7 +167,6 @@
   window.form = {
     noticeActivate: noticeActivate,
     setHandlers: setHandlers,
-    resetAnnouncementForm: resetAnnouncementForm,
     announcementFormDisabled: announcementFormDisabled
   };
 }

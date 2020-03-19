@@ -13,6 +13,8 @@
   var lastTimeout;
 
   var blockedFilter = function () {
+    filterForm.reset();
+
     for (var i = 0; i < filterFields.length; i++) {
       filterFields[i].setAttribute('disabled', 'disabled');
     }
