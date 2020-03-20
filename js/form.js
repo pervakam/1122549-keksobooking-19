@@ -1,8 +1,7 @@
 'use strict';
 
 (function () {
-  var inputAdres = document.getElementById('address');
-  var mapPinMain = document.querySelector('.map__pin--main');
+  var inputAddress = document.getElementById('address');
   var notice = document.querySelector('.notice');
   var announcementForm = document.querySelector('.ad-form');
   var noticeFieldset = notice.querySelectorAll('fieldset');
@@ -17,19 +16,15 @@
   var descriptionInput = announcementForm.querySelector('#description');
   var resetButton = announcementForm.querySelector('.ad-form__reset');
 
-  var mapPinX = parseFloat(mapPinMain.style.left) + window.util.MAP_PIN_WIDTH / 2;
-  var mapPinY = parseFloat(mapPinMain.style.top) + window.util.MAP_PIN_HEIGHT;
+  var defaultAddressValue = function () {
+    inputAddress.value = (window.pins.DefaultPinPosition.X + window.pins.MainPinCenter.X) + ',' + (window.pins.DefaultPinPosition.Y + window.pins.MainPinCenter.Y);
+  };
 
+    defaultAddressValue;
 
   var resetButtonHandler = function () {
     window.map.initialState();
   };
-
-  var defaultSettings = function () {
-    inputAdres.value = mapPinX + ',' + mapPinY;
-  };
-
-  defaultSettings();
 
   var announcementFormDisabled = function () {
     var emptyInput = '';
@@ -37,9 +32,10 @@
     titleInput.value = emptyInput;
     priceInput.value = emptyInput;
     descriptionInput.value = emptyInput;
+    announcementForm.reset();
 
-    noticeFieldset.forEach(function (notice) {
-      notice.setAttribute('disabled', 'disabled');
+    noticeFieldset.forEach(function (fieldset) {
+      fieldset.setAttribute('disabled', 'disabled');
     })
 
   };
@@ -105,38 +101,49 @@
   });
 
   var selectHousingHandler = function (evt) {
-    var target = evt.target;
+    // var target = evt.target;
+    //
+    // if (target.value === 'bungalo') {
+    //   priceInput.min = 0;
+    // } else if (target.value === 'flat') {
+    //   priceInput.min = 1000;
+    // } else if (target.value === 'house') {
+    //   priceInput.min = 5000;
+    // } else if (target.value === 'palace') {
+    //   priceInput.min = 10000;
+    // }
+    //
+    // priceInput.placeholder = priceInput.min;
 
-    if (target.value === 'bungalo') {
-      priceInput.min = 0;
-    } else if (target.value === 'flat') {
-      priceInput.min = 1000;
-    } else if (target.value === 'house') {
-      priceInput.min = 5000;
-    } else if (target.value === 'palace') {
-      priceInput.min = 10000;
-    }
 
-    priceInput.placeholder = priceInput.min;
+
+      switch (evt.target.value) {
+        case 'bungalo':
+          priceInput.min = 0;
+          priceInput.placeholder = priceInput.min;
+          break;
+        case 'flat':
+          priceInput.min = 1000;
+          priceInput.placeholder = priceInput.min;
+          break;
+        case 'house':
+          priceInput.min = 5000;
+          priceInput.placeholder = priceInput.min;
+          break;
+        case 'palace':
+          priceInput.min = 10000;
+          priceInput.placeholder = priceInput.min;
+          break;
+      }
+
   };
 
-  // var timeCheckHandler = function (evt) {
-  //   var chosenInput = (evt.target === timeInInput) ? timeInInput : timeOutInput;
-  //   var remainingInput = (evt.target === timeInInput) ? timeOutInput : timeInInput;
-  //
-  //   if (chosenInput.value === '12:00') {
-  //     remainingInput.value = chosenInput.value;
-  //   } else if (chosenInput.value === '13:00') {
-  //     remainingInput.value = chosenInput.value;
-  //   } else if (chosenInput.value === '14:00') {
-  //     remainingInput.value = chosenInput.value;
-  //   }
-  // };
+  var timeInCheckHandler = function () {
+    timeOutInput.value = timeInInput.value;
+  };
 
-  var noticeActivate = function (fieldset) {
-    for (var i = 0; i < fieldset.length; i++) {
-      fieldset[i].removeAttribute('disabled');
-    }
+  var timeOutCheckHandler = function () {
+    timeInInput.value = timeOutInput.value;
   };
 
   var submitHandler = function (evt) {
@@ -154,16 +161,16 @@
     announcementForm.addEventListener('submit', submitHandler);
     titleInput.addEventListener('invalid', titleLengthControlHandler);
     typeInput.addEventListener('change', selectHousingHandler);
-    // timeOutInput.addEventListener('change', timeCheckHandler);
-    // timeInInput.addEventListener('change', timeCheckHandler);
+    timeOutInput.addEventListener('change', timeOutCheckHandler);
+    timeInInput.addEventListener('change', timeInCheckHandler);
     resetButton.addEventListener('click', resetButtonHandler);
     priceInput.addEventListener('invalid', priceControlHandler);
   };
 
   window.form = {
-    noticeActivate: noticeActivate,
     setHandlers: setHandlers,
-    announcementFormDisabled: announcementFormDisabled
+    announcementFormDisabled: announcementFormDisabled,
+    defaultAddressValue: defaultAddressValue
   };
 }
 )();

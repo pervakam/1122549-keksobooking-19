@@ -10,7 +10,7 @@
   var filterFields = filterForm.querySelectorAll('select, fieldset');
 
   var activatePageHandler = function (data) {
-    window.data.serverData = data;
+    window.load.serverData = data;
     window.filter.filterData(data);
     window.filter.activateFilter(filterFields);
     window.pins.generatePins(data);
@@ -20,7 +20,9 @@
     window.load.loadCardContent(activatePageHandler, window.messages.errorMessage);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
-    window.form.noticeActivate(noticeFieldset);
+    noticeFieldset.forEach(function (fieldset) {
+      fieldset.removeAttribute('disabled');
+    });
 
     mapPinMain.removeEventListener('keydown', activateMapHandler);
     mapPinMain.removeEventListener('mousedown', activateMapHandler);
@@ -33,7 +35,6 @@
     }
   };
 
-
   var initialState = function () {
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
@@ -41,6 +42,7 @@
     window.pins.defaultMainPinPosition();
     window.card.closeCard();
     window.form.announcementFormDisabled();
+    window.form.defaultAddressValue();
     window.filter.blockedFilter();
 
     mapPinMain.addEventListener('keydown', activateMapHandler);

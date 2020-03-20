@@ -15,15 +15,15 @@
   var blockedFilter = function () {
     filterForm.reset();
 
-    for (var i = 0; i < filterFields.length; i++) {
-      filterFields[i].setAttribute('disabled', 'disabled');
-    }
+    filterFields.forEach(function (it) {
+      it.setAttribute('disabled', 'disabled');
+    })
   };
 
   var activateFilter = function (fields) {
-    for (var i = 0; i < fields.length; i++) {
-      fields[i].removeAttribute('disabled', 'disabled');
-    }
+    fields.forEach(function (fields) {
+      fields.removeAttribute('disabled', 'disabled');
+    })
   };
 
   blockedFilter();
@@ -78,7 +78,6 @@
     }
 
     var choseFeature = function (feature) {
-
       if (feature.checked) {
         filteredServerData = filteredServerData.filter(function (element) {
           return checkFeatures(element.offer.features, feature.value);
@@ -86,9 +85,9 @@
       }
     };
 
-    for (var i = 0; i < allFeatures.length; i++) {
-      choseFeature(allFeatures[i]);
-    }
+    allFeatures.forEach(function (it) {
+      choseFeature(it);
+    });
 
     return filteredServerData;
   };
@@ -96,24 +95,22 @@
   var filterPins = function (data) {
     window.card.closeCard();
     window.pins.removePins(data);
-    var filteredObjects = filterOptions(window.data.serverData);
+    var filteredObjects = filterOptions(window.load.serverData);
 
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
     lastTimeout = window.setTimeout(function () {
       window.pins.generatePins(filteredObjects);
-    }, 500);
+    }, window.util.TIMEOUT);
   };
 
   filterForm.addEventListener('change', filterPins);
-
 
   window.filter = {
     blockedFilter: blockedFilter,
     activateFilter: activateFilter,
     filterData: filterOptions,
     filterPins: filterPins
-
   };
 })();

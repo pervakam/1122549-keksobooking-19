@@ -12,6 +12,8 @@
   var STATUS_OK = 200;
   var TIMEOUT = 10000;
 
+  var serverData = null;
+
   var load = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
@@ -51,6 +53,7 @@
 
   window.load = {
     loadCardContent: loadCardContent,
-    sendForm: sendForm
+    sendForm: sendForm,
+    serverData: serverData
   };
 })();
