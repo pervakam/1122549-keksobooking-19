@@ -38,12 +38,8 @@
     priceInput.value = emptyInput;
     descriptionInput.value = emptyInput;
 
-    // for (var i = 0; i < noticeFieldset.length; i++) {
-    //   noticeFieldset[i].setAttribute('disabled', 'disabled');
-    // }
-
-    noticeFieldset.forEach(function (noticeFieldset) {
-      noticeFieldset.setAttribute('disabled', 'disabled');
+    noticeFieldset.forEach(function (notice) {
+      notice.setAttribute('disabled', 'disabled');
     })
 
   };
