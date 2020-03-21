@@ -14,6 +14,7 @@
     window.filter.filterData(data);
     window.filter.activateFilter(filterFields);
     window.pins.generatePins(data);
+
   };
 
   var activateMap = function () {
@@ -43,6 +44,8 @@
     window.card.closeCard();
     window.form.announcementFormDisabled();
     window.form.defaultAddressValue();
+    window.form.selectHousingHandler();
+    window.form.setRoomsAndCapacities();
     window.filter.blockedFilter();
 
     mapPinMain.addEventListener('keydown', activateMapHandler);

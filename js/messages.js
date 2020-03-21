@@ -14,7 +14,7 @@
   };
 
   var closeErrorHandlerByKey = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === window.util.ESC_KEY) {
       closeErrorHandler();
     }
   };
@@ -26,7 +26,7 @@
   };
 
   var closeSuccessHandlerByKey = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === window.util.ESC_KEY) {
       closeSuccessHandler();
     }
   };

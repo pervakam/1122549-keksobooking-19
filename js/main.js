@@ -2,5 +2,4 @@
 
 (function () {
   window.map.initialState();
-
 })();

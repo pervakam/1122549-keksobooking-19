@@ -4,7 +4,7 @@
 
   var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
   var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
-  var SERVER_MESSAGES = {
+  var serverMessages = {
     errorConnect: 'Произошла ошибка соединения',
     errorTimeout: 'Запрос не успел выполниться за ',
     responseStatus: 'Статус ответа: '
@@ -24,14 +24,14 @@
       if (xhr.status === STATUS_OK) {
         onSuccess(xhr.response);
       } else {
-        onError(SERVER_MESSAGES.responseStatus + xhr.status + ' ' + xhr.statusText);
+        onError(serverMessages.responseStatus + xhr.status + ' ' + xhr.statusText);
       }
     });
     xhr.addEventListener('error', function () {
-      onError(SERVER_MESSAGES.errorConnect);
+      onError(serverMessages.errorConnect);
     });
     xhr.addEventListener('timeout', function () {
-      onError(SERVER_MESSAGES.errorTimeout + xhr.timeout + 'мс');
+      onError(serverMessages.errorTimeout + xhr.timeout + 'мс');
     });
 
     return xhr;

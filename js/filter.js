@@ -17,13 +17,13 @@
 
     filterFields.forEach(function (it) {
       it.setAttribute('disabled', 'disabled');
-    })
+    });
   };
 
   var activateFilter = function (fields) {
-    fields.forEach(function (fields) {
-      fields.removeAttribute('disabled', 'disabled');
-    })
+    fields.forEach(function (it) {
+      it.removeAttribute('disabled', 'disabled');
+    });
   };
 
   blockedFilter();

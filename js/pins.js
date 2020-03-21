@@ -8,9 +8,9 @@
   var MAP_PIN_MAIN_WIDTH = 62;
   var MAP_PIN_MAIN_HEIGHT = 80;
   var PINS_QUANTITY = 5;
-  var MAP_HORIZONTAL_BORDER = {
-    top: 130,
-    bottom: 630
+  var MapHorizontalBorder = {
+    TOP: 130,
+    BOTTOM: 630
   };
 
   var mapPin = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -93,9 +93,9 @@
       mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
       mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
-      var PinMainPositionX = parseInt(mapPinMain.style.left) + MAP_PIN_MAIN_WIDTH / 2;
-      var PinMainPositionY = parseInt(mapPinMain.style.top) + MAP_PIN_MAIN_HEIGHT;
-      inputAdres.value = PinMainPositionX + ',' +  PinMainPositionY;
+      var PinMainPositionX = parseInt(mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2;
+      var PinMainPositionY = parseInt(mapPinMain.style.top, 10) + MAP_PIN_MAIN_HEIGHT;
+      inputAdres.value = PinMainPositionX + ',' + PinMainPositionY;
 
       if (mapPinMain.offsetLeft > map.offsetWidth - mapPinMain.offsetWidth) {
         mapPinMain.style.left = (map.offsetWidth - mapPinMain.offsetWidth) + 'px';
@@ -103,12 +103,11 @@
         mapPinMain.style.left = map.offsetTop + 'px';
       }
 
-      if (mapPinMain.offsetTop > MAP_HORIZONTAL_BORDER.bottom) {
-        mapPinMain.style.top = MAP_HORIZONTAL_BORDER.bottom + 'px';
-      } else if (mapPinMain.offsetTop < MAP_HORIZONTAL_BORDER.top) {
-        mapPinMain.style.top = MAP_HORIZONTAL_BORDER.top + 'px';
+      if (mapPinMain.offsetTop > MapHorizontalBorder.BOTTOM) {
+        mapPinMain.style.top = MapHorizontalBorder.BOTTOM + 'px';
+      } else if (mapPinMain.offsetTop < MapHorizontalBorder.TOP) {
+        mapPinMain.style.top = MapHorizontalBorder.TOP + 'px';
       }
-
     };
 
     var onMouseUp = function (evtUp) {
@@ -127,7 +126,7 @@
 
     mapPinsNew.forEach(function (newpin) {
       newpin.remove();
-    })
+    });
 
   };
 
