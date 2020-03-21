@@ -14,6 +14,7 @@
     window.filter.filterData(data);
     window.filter.activateFilter(filterFields);
     window.pins.generatePins(data);
+    window.avatar.uploadFiles();
 
   };
 
@@ -47,6 +48,7 @@
     window.form.selectHousingHandler();
     window.form.setRoomsAndCapacities();
     window.filter.blockedFilter();
+    window.avatar.resetPictures();
 
     mapPinMain.addEventListener('keydown', activateMapHandler);
     mapPinMain.addEventListener('mousedown', activateMapHandler);
