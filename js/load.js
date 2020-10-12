@@ -2,7 +2,8 @@
 
 (function () {
 
-  var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
+  // var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
+  var LOAD_URL = 'https://mail.yandex.ru/message_part/data.json?_uid=197371689&name=data.json&hid=1.1&ids=173951535607194991';
   var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
   var serverMessages = {
     errorConnect: 'Произошла ошибка соединения',
