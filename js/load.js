@@ -2,8 +2,8 @@
 
 (function () {
 
-  var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
-  var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
+  var LOAD_URL = 'https://21.javascript.pages.academy/keksobooking/data';
+  var UPLOAD_URL = 'https://21.javascript.pages.academy/keksobooking';
   var serverMessages = {
     errorConnect: 'Произошла ошибка соединения',
     errorTimeout: 'Запрос не успел выполниться за ',
